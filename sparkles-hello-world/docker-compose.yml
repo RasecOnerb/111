@@ -1,14 +1,11 @@
-version: "3.7"
-
-services:
-
-  app_proxy:
+realdebridmanager:
+    image: hyperbunny77/realdebridmanager:2022.06.27   #Change to the latest release
+    container_name: realdebridmanager
     environment:
-      # The format here is: <app-id>_<docker-service-name>_1
-      APP_HOST: sparkles-hello-world_server_1
-      APP_PORT: 3000
-    
-  server:
-    image: getumbrel/community-app-store-hello-world:latest
-    user: "1000:1000"
-    init: true
+      - rdmport=5000    # WebUI Port
+    ports:
+      - 5000:5000/tcp 	#Change second value if changed above
+    volumes:
+      - torrent_folder_to_watch:/watch
+      - path_for_config_storage:/config
+    restart: unless-stopped
